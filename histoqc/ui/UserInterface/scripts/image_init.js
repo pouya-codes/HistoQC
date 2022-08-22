@@ -15,7 +15,7 @@ function initialize_image_view (case_list) {
 	for (var i = 0; i < case_list.length; i++) {
 		$div.append(
 			generate_img_block(
-				"overview-image-block", case_list[i], 
+				"overview-image-block", case_list[i],
 				CURRENT_IMAGE_TYPE, CURRENT_COMPARE_TYPE, case_list[i]
 			)
 		);
@@ -23,7 +23,7 @@ function initialize_image_view (case_list) {
  
 	$div.children("div").children("img").click(function(){
 		src_list = this.src.split('/');
-		enter_select_mode(src_list[src_list.length-2].replace("%20", " "));
+		enter_select_mode(src_list[src_list.length-2].replace("%20", " ").replace("#", "%23"));
 	});
 
 	init_image_selector();
@@ -49,7 +49,7 @@ function update_image_view (case_list) {
  
 	$div.children("div").children("img").click(function(){
 		src_list = this.src.split('/');
-		enter_select_mode(src_list[src_list.length-2].replace("%20", " "));
+		enter_select_mode(src_list[src_list.length-2].replace("%20", " ").replace("#", "%23"));
 	});
 
 	update_multi_selected_image_view(case_list);
@@ -89,6 +89,7 @@ function enter_select_image_view (dir) {
 		if (SKIP_IMAGE_EXTENSIONS.indexOf(i) >= 0) {
 			continue;
 		}
+
 		$div.append(
 			generate_img_block(
 				"candidate-image-block", dir, 
@@ -145,16 +146,17 @@ function calculate_height ($div) {
 
 
 function generate_img_block (blk_class, file_name, img_type, compare_type, img_label) {
-	var img_block = "<div id='" + ORIGINAL_CASE_DICT[file_name]["dom_id"] + 
+
+	var img_block = "<div id='" + ORIGINAL_CASE_DICT[file_name.replace("%23", "#")]["dom_id"] +
 		"' class='" + blk_class + "'>" +
 		"<img src='" + generate_img_src(
-			file_name, img_type, blk_class == "overview-image-block"
+			file_name.replace("#", "%23"), img_type, blk_class == "overview-image-block"
 		) + "' file_name='" + file_name + 
 		"' img_type='" + img_type + 
 		"' onerror=\"this.style.display='none'\"/>";
 	if (compare_type != -1) {
 		img_block += "<img src='" + generate_img_src(
-				file_name, compare_type, blk_class == "overview-image-block"
+				file_name.replace("#", "%23"), compare_type, blk_class == "overview-image-block"
 			) + "' file_name='" + file_name + 
 			"' img_type='" + compare_type + 
 			"' onerror=\"this.style.display='none'\"/>";
@@ -169,6 +171,7 @@ function generate_img_src (file_name, img_type_index, use_small=false) {
 	if (use_small && SMALL_IMAGE_EXTENSIONS.indexOf(image_extension) >= 0) {
 		image_extension = image_extension.split(".")[0] + "_small.png";
 	}
+
 	return DATA_PATH + file_name + "/" + file_name + image_extension
 
 }

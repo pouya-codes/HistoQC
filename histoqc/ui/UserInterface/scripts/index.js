@@ -153,7 +153,7 @@ function hide_view (view_name) {
 function init_views () {
 
 	function init_image_format_list () {
-		var test_file = ORIGINAL_DATASET[0]["filename"];
+		var test_file = ORIGINAL_DATASET[0]["filename"].replace("#", "%23");
 		var test_out_dir = ORIGINAL_DATASET[0]["outdir"];
 
 		for (var idx = 0; idx < DEFAULT_IMAGE_EXTENSIONS.length; idx ++) {

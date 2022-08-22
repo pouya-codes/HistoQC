@@ -24,4 +24,11 @@ htmlcov/
 
 histoqc/_version.py
 environment.yml
+config
+.env/
+config_clinical
+config_first
+config_ihc
+config_light
+config_v2.1
 
